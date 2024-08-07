@@ -18,6 +18,7 @@ package cache
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -150,6 +151,7 @@ func parseExports(s string) (ret []exportPkg, err error) {
 		}
 		ret = append(ret, v)
 	}
+	fmt.Println(ret)
 	return
 }
 
