@@ -120,7 +120,7 @@ type exportPkg struct {
 }
 
 func golistExport(dir string, pkgPath []string) (ret []exportPkg, err error) {
-	return nil, nil
+	return []exportPkg{}, nil
 }
 
 func parseExports(s string) (ret []exportPkg, err error) {
