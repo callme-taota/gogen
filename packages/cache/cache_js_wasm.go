@@ -1,5 +1,3 @@
-//go:build !(js && wasm)
-
 /*
  Copyright 2022 The GoPlus Authors (goplus.org)
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +18,6 @@ import (
 	"errors"
 	"io"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"sync"
@@ -122,22 +119,9 @@ type exportPkg struct {
 	deps    []string
 }
 
+// TODO: wasm support
 func golistExport(dir string, pkgPath []string) (ret []exportPkg, err error) {
-	var stdout, stderr bytes.Buffer
-	var args = make([]string, 0, 3+len(pkgPath))
-	args = append(args, "list", "-f={{.ImportPath}}\t{{.Export}}\t{{.Deps}}", "-export")
-	args = append(args, pkgPath...)
-	cmd := exec.Command("go", args...)
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	cmd.Dir = dir
-	err = cmd.Run()
-	if err == nil {
-		return parseExports(stdout.String())
-	} else if stderr.Len() > 0 {
-		err = errors.New(stderr.String())
-	}
-	return
+	return []exportPkg{}, nil
 }
 
 func parseExports(s string) (ret []exportPkg, err error) {
